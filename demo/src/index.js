@@ -32,10 +32,37 @@ class Demo extends Component {
     this.lastId += 1;
   }
 
+  // Talk to Ollama API
+  async ollamaMessage() {
+    console.log("ollamaMessage @@@@@@@@@@@");
+    try {
+      const response = await fetch("http://localhost:11434/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "deepseek-r1:1.5b",
+          prompt: "Why is the sky blue?",
+          stream: false,
+        }),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data["response"]);
+      // return data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   // This is the response coming from OLLAMA API
-  _sendMessage(text) {
+  async _sendMessage(text) {
     console.log("_sendMessage @@@@@@@@@@@");
-    console.log(text);
+
+    // Call the function
+    await this.ollamaMessage();
+    console.log("COMPLETEDDDDD @@@@@@@@@@@");
     if (text.length > 0) {
       const newMessagesCount = this.state.isOpen
         ? this.state.newMessagesCount
