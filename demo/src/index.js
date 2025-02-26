@@ -21,8 +21,8 @@ class Demo extends Component {
 
   // This is the data we need to take and pass it to Ollama.
   _onMessageWasSent(message) {
-    console.log("_onMessageWasSent ########");
-    console.log(message);
+    console.log("_onMessageWasSent");
+    this.ollamaMessage(message.data.text);
     this.setState({
       messageList: [
         ...this.state.messageList,
@@ -33,8 +33,8 @@ class Demo extends Component {
   }
 
   // Talk to Ollama API
-  async ollamaMessage() {
-    console.log("ollamaMessage @@@@@@@@@@@");
+  async ollamaMessage(text) {
+    console.log("text: ", text);
     try {
       const response = await fetch("http://localhost:11434/api/generate", {
         method: "POST",
@@ -43,26 +43,24 @@ class Demo extends Component {
         },
         body: JSON.stringify({
           model: "deepseek-r1:1.5b",
-          prompt: "Why is the sky blue?",
+          system:
+            "You are an MIE AI Assistant. You are here help with any questions asked.",
+          prompt: text,
           stream: false,
         }),
       });
       console.log(response);
       const data = await response.json();
-      console.log(data["response"]);
+      // console.log(data["response"]);
+      this._sendMessage(data["response"]);
       // return data;
     } catch (error) {
       console.error("Error:", error);
     }
   }
 
-  // This is the response coming from OLLAMA API
   async _sendMessage(text) {
-    console.log("_sendMessage @@@@@@@@@@@");
-
-    // Call the function
-    await this.ollamaMessage();
-    console.log("COMPLETEDDDDD @@@@@@@@@@@");
+    console.log("_sendMessage");
     if (text.length > 0) {
       const newMessagesCount = this.state.isOpen
         ? this.state.newMessagesCount
