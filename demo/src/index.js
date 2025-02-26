@@ -42,9 +42,8 @@ class Demo extends Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "deepseek-r1:1.5b",
-          system:
-            "You are an MIE AI Assistant. You are here help with any questions asked.",
+          // model: "deepseek-r1:1.5b",
+          model: "MIE-Assistant:latest",
           prompt: text,
           stream: false,
         }),
@@ -111,7 +110,7 @@ class Demo extends Component {
         <TestArea onMessage={this._sendMessage.bind(this)} />
         <Launcher
           agentProfile={{
-            teamName: "react-beautiful-chat",
+            teamName: "MIE AI Assistant",
             imageUrl:
               "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png",
           }}
