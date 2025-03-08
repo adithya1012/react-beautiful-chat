@@ -45,7 +45,7 @@ class Demo extends Component {
           // model: "deepseek-r1:1.5b",
           model: "MIE-Assistant:latest",
           prompt: text,
-          stream: false,
+          // stream: false,
         }),
       });
       console.log(response);
